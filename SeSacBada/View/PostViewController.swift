@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Toast
+import XCTest
 
 class PostViewController: UIViewController {
     let mainContentView = UIView()
@@ -57,7 +58,9 @@ class PostViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
+        self.contentLabel.text = self.viewModel.contentLabel.value
         print("this is post Id \(postId)")
         self.viewModel.getReadComment(id: postId) { error, code in
             if code == .success {
@@ -178,10 +181,16 @@ class PostViewController: UIViewController {
     }
     
     @objc func registerCommentButtonClicked() {
+        print(#function)
+        print("현재 포스트 아이디 = \(self.postId)")
         self.viewModel.postWriteComment(text: commentTextView.text, postId: self.postId) { error, code in
+            print("----registerCommentButtonClicked완료----")
             if code == .success {
                 self.view.makeToast("코멘트 등록 완료")
-                self.tableView.reloadData()
+                self.viewModel.getReadComment(id: self.postId) { error, code in
+                    self.tableView.reloadData()
+                }
+                
             } else {
                 self.view.makeToast("코멘트 등록 실패")
             }
@@ -206,7 +215,6 @@ class PostViewController: UIViewController {
             print("본인이 쓴 글 삭제하러 들어옴")
             print("지금 글 아이디 \(self.postId)")
             self.viewModel.fetchDeletePost(id: self.postId) { error, code in
-                print("에러 = \(error), 코드 = \(code)")
                 if code == .failed {
                     self.view.makeToast("삭제에 실패했습니다. 다시 시도해주세요.")
                 } else {
@@ -214,6 +222,45 @@ class PostViewController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             }
+        } else {
+            view.makeToast("본인 글만 삭제할 수 있습니다.")
+        }
+    }
+    
+    @objc func deleteCommentButtonClicked(sender: UIButton) {
+        
+        if self.viewModel.commentArray.value[sender.tag].user.id == UserDefaults.standard.integer(forKey: "Id") {
+            self.viewModel.fetchDeleteComment(commentId: self.viewModel.commentArray.value[sender.tag].id) { error, code in
+                if code == .failed {
+                    self.view.makeToast("삭제에 실패했습니다. 다시 시도해주세요.")
+                } else {
+                    self.view.makeToast("삭제 완료")
+                    self.viewModel.getReadComment(id: self.postId) { error, code in
+                        self.tableView.reloadData()
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    @objc func editCommentButtonClicked(sender: UIButton) {
+        if self.viewModel.commentArray.value[sender.tag].user.id == UserDefaults.standard.integer(forKey: "Id") {
+            
+            let vc = CommentEditViewController()
+            print("post id", self.postId)
+            print("commentId", self.viewModel.commentArray.value[sender.tag].id)
+            print("writeUserId", self.viewModel.commentArray.value[sender.tag].user.id)
+            print("원래글", vc.viewModel.text.value)
+            print("전달 된 글", self.viewModel.commentArray.value[sender.tag].comment)
+            vc.viewModel.postId.value = self.postId
+            vc.viewModel.commentId.value = self.viewModel.commentArray.value[sender.tag].id
+            vc.viewModel.writeUserId.value = self.viewModel.commentArray.value[sender.tag].user.id
+            vc.viewModel.text.value = self.viewModel.commentArray.value[sender.tag].comment
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            view.makeToast("본인 댓글만 수정 가능합니다.")
         }
     }
     
@@ -314,6 +361,10 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.nameLabel.text = viewModel.commentArray.value[indexPath.row].user.username
         cell.contentLabel.text = viewModel.commentArray.value[indexPath.row].comment
+        cell.commentDeleteButton.addTarget(self, action: #selector(deleteCommentButtonClicked(sender: )), for: .touchUpInside)
+        cell.commentDeleteButton.tag = indexPath.row
+        cell.commentEditbutton.addTarget(self, action: #selector(editCommentButtonClicked), for: .touchUpInside)
+        cell.commentEditbutton.tag = indexPath.row
         
         
         return cell

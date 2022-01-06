@@ -13,14 +13,16 @@ class CommentTableViewCell: UITableViewCell {
     let identifier = "CommentTableViewCell"
     let nameLabel = UILabel()
     let contentLabel = UILabel()
-    let sideButton = UIButton()
+    let commentDeleteButton = UIButton()
+    let commentEditbutton = UIButton()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: identifier)
         contentView.addSubview(nameLabel)
         contentView.addSubview(contentLabel)
-        contentView.addSubview(sideButton)
+        contentView.addSubview(commentDeleteButton)
+        contentView.addSubview(commentEditbutton)
         
         
         
@@ -46,7 +48,10 @@ class CommentTableViewCell: UITableViewCell {
         self.contentLabel.font = .systemFont(ofSize: 14)
         self.contentLabel.text = "contentLabel"
         
-        self.sideButton.setImage(UIImage(named: "메뉴버튼"), for: .normal)
+        self.commentDeleteButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        self.commentDeleteButton.tintColor = .lightGray
+        self.commentEditbutton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        self.commentEditbutton.tintColor = .lightGray
      
     }
     
@@ -57,7 +62,7 @@ class CommentTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(20)
         }
         
-        sideButton.snp.makeConstraints { make in
+        commentDeleteButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
             make.trailing.equalToSuperview().offset(-15)
             make.height.width.equalTo(12)
@@ -69,6 +74,12 @@ class CommentTableViewCell: UITableViewCell {
             make.trailing.leading.equalToSuperview().offset(20)
             make.bottom.equalToSuperview().offset(-15)
             
+        }
+        
+        commentEditbutton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(18)
+            make.trailing.equalTo(commentDeleteButton.snp.leading).offset(-8)
+            make.height.width.equalTo(12)
         }
         
         

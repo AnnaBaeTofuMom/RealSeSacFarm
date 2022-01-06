@@ -81,6 +81,7 @@ class WriteViewController: UIViewController {
                 } else {
                     self.view.makeToast("수정이 완료되었습니다.")
                     print("성공~~~")
+                    self.navigationController?.popViewController(animated: true)
                 }
                 
             }

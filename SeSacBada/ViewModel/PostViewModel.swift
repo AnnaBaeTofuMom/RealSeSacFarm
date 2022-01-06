@@ -57,6 +57,16 @@ class PostViewModel {
         }
     }
     
+    func fetchDeleteComment(commentId: Int, completion: @escaping (APIError?, StatusCode?) -> Void) {
+        APIService.deleteComment(commentId: commentId) { error, code in
+            if code == .success {
+                completion(nil, .success)
+            } else {
+                completion(error, .failed)
+            }
+        }
+    }
+    
     
     
 }

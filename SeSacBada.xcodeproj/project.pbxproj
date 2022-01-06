@@ -27,6 +27,8 @@
 		1A1DD043278583C600EE613D /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD042278583C600EE613D /* BoardViewModel.swift */; };
 		1A1DD04527858A3400EE613D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD04427858A3400EE613D /* Board.swift */; };
 		1A1DD0472785BC1C00EE613D /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD0462785BC1C00EE613D /* PostViewController.swift */; };
+		3A8E67812786E8DC00E4AACD /* CommentEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E67802786E8DC00E4AACD /* CommentEditViewController.swift */; };
+		3A8E67832786E9BB00E4AACD /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8E67822786E9BB00E4AACD /* CommentViewModel.swift */; };
 		3AF3E7CF2786D11000CF425B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3E7CE2786D11000CF425B /* Comment.swift */; };
 		3AF3E7D12786D13A00CF425B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3E7D02786D13A00CF425B /* APIService.swift */; };
 		3AF3E7D32786D15900CF425B /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF3E7D22786D15900CF425B /* Endpoint.swift */; };
@@ -56,6 +58,8 @@
 		1A1DD042278583C600EE613D /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		1A1DD04427858A3400EE613D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		1A1DD0462785BC1C00EE613D /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		3A8E67802786E8DC00E4AACD /* CommentEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditViewController.swift; sourceTree = "<group>"; };
+		3A8E67822786E9BB00E4AACD /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		3AF3E7CE2786D11000CF425B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		3AF3E7D02786D13A00CF425B /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		3AF3E7D22786D15900CF425B /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../../Desktop/sesacbada1/sesacbada/Endpoint.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				1A1DD03727830D6300EE613D /* SignInViewModel.swift */,
 				1A1DD042278583C600EE613D /* BoardViewModel.swift */,
 				3AF3E7DC2786D29E00CF425B /* PostViewModel.swift */,
+				3A8E67822786E9BB00E4AACD /* CommentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 				1A1DD03D27846C8900EE613D /* BoardTableViewCell.swift */,
 				3AF3E7DA2786D24400CF425B /* CommentTableViewCell.swift */,
 				1A1DD0462785BC1C00EE613D /* PostViewController.swift */,
+				3A8E67802786E8DC00E4AACD /* CommentEditViewController.swift */,
 				3AF3E7D82786D21700CF425B /* WriteViewController.swift */,
 			);
 			path = View;
@@ -231,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8E67832786E9BB00E4AACD /* CommentViewModel.swift in Sources */,
 				1A1DD0252782DBFB00EE613D /* Observable.swift in Sources */,
 				3AF3E7D92786D21700CF425B /* WriteViewController.swift in Sources */,
 				3AF3E7DF2786D2CD00CF425B /* WriteViewModel.swift in Sources */,
@@ -249,6 +256,7 @@
 				1A1DD0272782DCE100EE613D /* SignUpViewController.swift in Sources */,
 				3AF3E7DD2786D29E00CF425B /* PostViewModel.swift in Sources */,
 				1A1DD03A2784675C00EE613D /* BoardViewController.swift in Sources */,
+				3A8E67812786E8DC00E4AACD /* CommentEditViewController.swift in Sources */,
 				1A1DD00A2782D36000EE613D /* SceneDelegate.swift in Sources */,
 				1A1DD03627830AA400EE613D /* SignInViewController.swift in Sources */,
 				1A1DD04527858A3400EE613D /* Board.swift in Sources */,
@@ -307,6 +315,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -368,6 +377,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

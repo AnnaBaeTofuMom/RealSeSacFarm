@@ -68,9 +68,10 @@ class APIService {
         let url = Endpoint.writeComment.url
         var request = URLRequest(url: url)
         request.httpMethod = Method.POST.rawValue
-        request.httpBody = "comment=\(text)$post=\(postId)".data(using: .utf8, allowLossyConversion: false)
+        request.httpBody = "comment=\(text)&post=\(postId)".data(using: .utf8, allowLossyConversion: false)
         let token = UserDefaults.standard.string(forKey: "Token")!
-        request.setValue("bearer " + token, forHTTPHeaderField: "authorization")
+        request.setValue("bearer \(token)", forHTTPHeaderField: "authorization")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         URLSession.request(endpoint: request, completion: completion)
     }
     
@@ -103,6 +104,29 @@ class APIService {
         let token = UserDefaults.standard.string(forKey: "Token")!
         request.setValue("bearer \(token)", forHTTPHeaderField: "authorization")
         
+        URLSession.request(endpoint: request, completion: completion)
+    }
+    
+    static func deleteComment(commentId: Int, completion: @escaping (APIError?, StatusCode?) -> Void) {
+        let url = Endpoint.deleteComment(commentId: commentId).url
+        var request = URLRequest(url: url)
+        request.httpMethod = Method.DELETE.rawValue
+        request.setValue("\(commentId)", forHTTPHeaderField: "post")
+        let token = UserDefaults.standard.string(forKey: "Token")!
+        request.setValue("bearer \(token)", forHTTPHeaderField: "authorization")
+        
+        URLSession.request(endpoint: request, completion: completion)
+    }
+    
+    static func editComment(text: String, commentId: Int, postId: Int, completion: @escaping (APIError?, StatusCode?) -> Void) {
+        print("요청하는 코멘트 아이디 \(commentId)")
+        let url = Endpoint.editComment(commnetId: commentId).url
+        var request = URLRequest(url: url)
+        request.httpMethod = Method.PUT.rawValue
+        let token = UserDefaults.standard.string(forKey: "Token")!
+        request.setValue("bearer " + token, forHTTPHeaderField: "authorization")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "comment=\(text)&post=\(postId)".data(using: .utf8, allowLossyConversion: false)
         URLSession.request(endpoint: request, completion: completion)
     }
     
