@@ -120,7 +120,7 @@ class APIService {
     
     static func editComment(text: String, commentId: Int, postId: Int, completion: @escaping (APIError?, StatusCode?) -> Void) {
         print("요청하는 코멘트 아이디 \(commentId)")
-        let url = Endpoint.editComment(commnetId: commentId).url
+        let url = Endpoint.editComment(commentId: commentId).url
         var request = URLRequest(url: url)
         request.httpMethod = Method.PUT.rawValue
         let token = UserDefaults.standard.string(forKey: "Token")!
