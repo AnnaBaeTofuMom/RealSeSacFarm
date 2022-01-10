@@ -249,6 +249,7 @@ class PostViewController: UIViewController {
             print("----registerCommentButtonClicked완료----")
             if code == .success {
                 self.view.makeToast("코멘트 등록 완료")
+                self.commentTextView.text = ""
                 self.viewModel.getReadComment(id: self.postId) { error, code in
                     self.tableView.reloadData()
                     self.commentCountLabel.text = "댓글 \(self.viewModel.commentArray.value.count)개"
@@ -288,34 +289,46 @@ class PostViewController: UIViewController {
     }
     
     @objc func deleteButtonClicked() {
-        if UserDefaults.standard.integer(forKey: "Id") == self.writeUserId {
-            print("본인이 쓴 글 삭제하러 들어옴")
-            print("지금 글 아이디 \(self.postId)")
-            self.viewModel.fetchDeletePost(id: self.postId) { error, code in
-                if code == .failed {
-                    if error == .invalidToken {
-                        self.view.makeToast("세션이 만료되었습니다.")
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            UserDefaults.standard.set("", forKey: "Token")
-                            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                            
-                            let nav = UINavigationController(rootViewController: SignInViewController())
-                            windowScene.windows.first?.rootViewController = nav
-                            windowScene.windows.first?.makeKeyAndVisible()
-                        }
+        let alert = UIAlertController(title: "삭제하기", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { action in
+            if UserDefaults.standard.integer(forKey: "Id") == self.writeUserId {
+                
+                self.viewModel.fetchDeletePost(id: self.postId) { error, code in
+                    if code == .failed {
+                        if error == .invalidToken {
+                            self.view.makeToast("세션이 만료되었습니다.")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                UserDefaults.standard.set("", forKey: "Token")
+                                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                                
+                                let nav = UINavigationController(rootViewController: SignInViewController())
+                                windowScene.windows.first?.rootViewController = nav
+                                windowScene.windows.first?.makeKeyAndVisible()
+                            }
 
+                        } else {
+                            self.view.makeToast("삭제에 실패했습니다. 다시 시도해주세요.")
+                        }
                     } else {
-                        self.view.makeToast("삭제에 실패했습니다. 다시 시도해주세요.")
+                        
+                        self.view.makeToast("삭제 완료")
+                        self.navigationController?.popViewController(animated: true)
                     }
-                } else {
-                    
-                    self.view.makeToast("삭제 완료")
-                    self.navigationController?.popViewController(animated: true)
                 }
+            } else {
+                self.view.makeToast("본인 글만 삭제할 수 있습니다.")
             }
-        } else {
-            view.makeToast("본인 글만 삭제할 수 있습니다.")
         }
+        let cancelAction = UIAlertAction(title: "취소", style: .default) { action in
+            
+        }
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true) {
+            
+        }
+        
     }
     
     @objc func deleteCommentButtonClicked(sender: UIButton) {
@@ -478,4 +491,6 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
     
     
 }
+
+
 
