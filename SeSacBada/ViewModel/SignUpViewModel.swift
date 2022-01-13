@@ -8,11 +8,11 @@
 import Foundation
 
 class SignUpViewModel {
-    var username: Observable<String> = Observable("")
-    var email: Observable<String> = Observable("")
-    var password: Observable<String> = Observable("")
-    var signUp: Observable<UserInfo> = Observable(UserInfo(jwt: "", user: UserClass(id: 0, username: "", email: "", provider: "", confirmed: true, role: Role(id: 0, name: "", roleDescription: "", type: ""), createdAt: "", updatedAt: "")))
-    var errorMessage: Observable<String> = Observable("")
+    var username: ObservablePrivate<String> = ObservablePrivate("")
+    var email: ObservablePrivate<String> = ObservablePrivate("")
+    var password: ObservablePrivate<String> = ObservablePrivate("")
+    var signUp: ObservablePrivate<UserInfo> = ObservablePrivate(UserInfo(jwt: "", user: UserClass(id: 0, username: "", email: "", provider: "", confirmed: true, role: Role(id: 0, name: "", roleDescription: "", type: ""), createdAt: "", updatedAt: "")))
+    var errorMessage: ObservablePrivate<String> = ObservablePrivate("")
     
     func postSignUp(completion: @escaping (APIError?, StatusCode?) -> Void) {
         APIService.signUp(username: username.value, email: email.value, password: password.value) { user, error, code  in

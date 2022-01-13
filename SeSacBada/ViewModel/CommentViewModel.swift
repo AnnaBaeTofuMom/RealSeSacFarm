@@ -7,10 +7,10 @@
 
 import Foundation
 class CommentViewModel {
-    var text: Observable<String> = Observable("")
-    var commentId: Observable<Int> = Observable(0)
-    var postId: Observable<Int> = Observable(0)
-    var writeUserId: Observable<Int> = Observable(0)
+    var text: ObservablePrivate<String> = ObservablePrivate("")
+    var commentId: ObservablePrivate<Int> = ObservablePrivate(0)
+    var postId: ObservablePrivate<Int> = ObservablePrivate(0)
+    var writeUserId: ObservablePrivate<Int> = ObservablePrivate(0)
 
     
     func putEditComment(text: String, commentId: Int, postId: Int, completion: @escaping (APIError?, StatusCode?) -> Void ) {

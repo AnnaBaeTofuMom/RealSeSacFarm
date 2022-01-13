@@ -8,9 +8,9 @@
 import Foundation
 
 class SignInViewModel {
-    var identifier: Observable<String> = Observable("")
-    var password: Observable<String> = Observable("")
-    var signIn: Observable<UserInfo> = Observable(UserInfo(jwt: "", user: UserClass(id: 0, username: "", email: "", provider: "", confirmed: true, role: Role(id: 0, name: "", roleDescription: "", type: ""), createdAt: "", updatedAt: "")))
+    var identifier: ObservablePrivate<String> = ObservablePrivate("")
+    var password: ObservablePrivate<String> = ObservablePrivate("")
+    var signIn: ObservablePrivate<UserInfo> = ObservablePrivate(UserInfo(jwt: "", user: UserClass(id: 0, username: "", email: "", provider: "", confirmed: true, role: Role(id: 0, name: "", roleDescription: "", type: ""), createdAt: "", updatedAt: "")))
     
     func postSignIn(completion: @escaping (APIError?, StatusCode?) -> Void) {
         APIService.signIn(identifier: identifier.value, password: password.value) { user, error, code  in

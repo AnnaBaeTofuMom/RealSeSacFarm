@@ -26,10 +26,16 @@ extension UITextField {
   }
 }
 
-extension UIButton {
-    func buttonDesign(text: String) {
+extension UIButton: ObservableObject {
+    func buttonDesign(text: String, unabledText: String) {
         self.backgroundColor = UIColor(hue: 0.7, saturation: 0.61, brightness: 0.91, alpha: 1.0)
-        self.setTitle(text, for: .normal)
         self.layer.cornerRadius = 10
+        if self.isEnabled == true {
+            self.setTitle(text, for: .normal)
+        } else {
+            self.setTitle(unabledText, for: .disabled)
+           
+        }
+        
     }
 }

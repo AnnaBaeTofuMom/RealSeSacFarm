@@ -32,7 +32,7 @@ class StartViewController: UIViewController {
         logoImageView.image = UIImage(named: "새싹바다")
         
         
-        startButton.buttonDesign(text: "시작하기")
+        startButton.buttonDesign(text: "시작하기", unabledText: "시작하기")
         
         startButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

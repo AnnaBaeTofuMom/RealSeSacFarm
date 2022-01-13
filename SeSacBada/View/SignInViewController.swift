@@ -28,7 +28,7 @@ class SignInViewController: UIViewController {
         
         email.textFieldDesign(text: "Email")
         password.textFieldDesign(text: "Password")
-        loginButton.buttonDesign(text: "Login")
+        loginButton.buttonDesign(text: "Login", unabledText: "빈 칸을 채워주세요")
         
         email.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

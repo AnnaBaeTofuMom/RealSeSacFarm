@@ -10,14 +10,14 @@ import UIKit
 import XCTest
 
 class PostViewModel {
-    var commentArray = Observable(CommentInfo())
-    var singlePostBoard: Observable<BoardElement> = Observable(BoardElement(id: 0, text: "", user: User(id: 0, username: "", email: "", provider: .local, confirmed: false, blocked: false, role: 0, createdAt: "", updatedAt: ""), createdAt: "", updatedAt: "", comments: []))
-    var postId: Observable<Int> = Observable(0)
-    var writeUserId: Observable<Int> = Observable(0)
-    var nameLabel: Observable<String> = Observable("")
-    var contentLabel: Observable<String> = Observable("")
-    var dateLabel: Observable<String> = Observable("")
-    var commentLabel: Observable<String> = Observable("")
+    var commentArray = ObservablePrivate(CommentInfo())
+    var singlePostBoard: ObservablePrivate<BoardElement> = ObservablePrivate(BoardElement(id: 0, text: "", user: User(id: 0, username: "", email: "", provider: .local, confirmed: false, blocked: false, role: 0, createdAt: "", updatedAt: ""), createdAt: "", updatedAt: "", comments: []))
+    var postId: ObservablePrivate<Int> = ObservablePrivate(0)
+    var writeUserId: ObservablePrivate<Int> = ObservablePrivate(0)
+    var nameLabel: ObservablePrivate<String> = ObservablePrivate("")
+    var contentLabel: ObservablePrivate<String> = ObservablePrivate("")
+    var dateLabel: ObservablePrivate<String> = ObservablePrivate("")
+    var commentLabel: ObservablePrivate<String> = ObservablePrivate("")
     
     func getReadSinglePost(postId: Int, completion: @escaping (BoardElement?, APIError?, StatusCode? ) -> Void) {
         APIService.readSinglePost(postId: postId) { Boardelement, error, code in

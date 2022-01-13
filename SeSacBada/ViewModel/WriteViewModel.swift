@@ -7,9 +7,9 @@
 
 import Foundation
 class WriteViewModel {
-    var text: Observable<String> = Observable("")
-    var postId: Observable<Int> = Observable(0)
-    var writeUserId: Observable<Int> = Observable(0)
+    var text: ObservablePrivate<String> = ObservablePrivate("")
+    var postId: ObservablePrivate<Int> = ObservablePrivate(0)
+    var writeUserId: ObservablePrivate<Int> = ObservablePrivate(0)
 
     
     func postWritePost(text: String, completion: @escaping (APIError?, StatusCode?) -> Void ) {

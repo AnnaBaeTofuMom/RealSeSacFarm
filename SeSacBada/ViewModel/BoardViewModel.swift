@@ -8,7 +8,7 @@
 import Foundation
 
 class BoardViewModel {
-    var boardArray = Observable(Board())
+    var boardArray = ObservablePrivate(Board())
 
     func getReadPost(completion: @escaping (APIError?, StatusCode?) -> Void) {
         APIService.readPost { board, error, code in

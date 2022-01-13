@@ -8,6 +8,9 @@
 import UIKit
 import SnapKit
 import Toast
+import RxCocoa
+import RxSwift
+
 
 class SignUpViewController: UIViewController {
     
@@ -16,6 +19,7 @@ class SignUpViewController: UIViewController {
     let password = UITextField()
     let passwordCheck = UITextField()
     let joinButton = UIButton()
+    let disposeBag = DisposeBag()
     
     let viewModel = SignUpViewModel()
 
@@ -33,6 +37,21 @@ class SignUpViewController: UIViewController {
             self.password.text = text
         }
         
+        Observable.combineLatest(
+            email.rx.text.orEmpty.map(checkEmailValid),
+            password.rx.text.orEmpty.map(checkPasswordValid),
+            resultSelector: { s1, s2 in s1 && s2 }
+        )
+            .subscribe(onNext: { b in
+                print(b)
+                self.joinButton.isEnabled = b
+                if b == true {
+                    self.joinButton.setTitle("회원가입", for: .normal)
+                } else {
+                    self.joinButton.setTitle("빈 칸을 채워주세요", for: .disabled)
+                }
+            })
+            .disposed(by: disposeBag)
 
         view.backgroundColor = .white
         view.addSubview(email)
@@ -45,7 +64,7 @@ class SignUpViewController: UIViewController {
         username.textFieldDesign(text: "Nickname")
         password.textFieldDesign(text: "Password")
         passwordCheck.textFieldDesign(text: "Password Check")
-        joinButton.buttonDesign(text: "회원가입")
+        joinButton.buttonDesign(text: "회원가입", unabledText: "빈 칸을 채워주세요")
         
         
         email.snp.makeConstraints { make in
@@ -88,6 +107,19 @@ class SignUpViewController: UIViewController {
         
     }
     
+    func checkEmailValid(text: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+               let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+               return emailTest.evaluate(with: text)
+    }
+    
+    func checkPasswordValid(text: String) -> Bool {
+        if text.count >= 1 {
+            return true
+        } else {
+            return false
+        }
+    }
     
     @objc func signupButtonClicked() {
         print(#function)
